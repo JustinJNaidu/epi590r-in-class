@@ -57,3 +57,43 @@ tbl_summary(
 	modify_footnote(update = everything() ~ NA) |>
 	modify_header(label = "**Variable**", p.value = "**P**")
 
+# In-class Exercise
+
+
+# Create a helper function to select sleep variables
+select_sleep_vars <- function(data) {
+	data |>
+		select(starts_with("sleep"))
+}
+
+
+
+tbl_summary(
+	nlsy,
+	by = sex_cat,
+	include = c(sex_cat, race_eth_cat,
+							region_cat, sleep_wkdy, sleep_wknd, income),
+	label = list(
+		race_eth_cat ~ "Race/ethnicity",
+		region_cat ~ "Region",
+		sleep_wkdy ~ "Sleep Weekdays",
+		sleep_wknd ~ "Sleep Weekends",
+		income ~ "Income"
+	),
+	statistic = list(
+		income ~ "{p10} ({p90})",    # 10th and 90th percentiles with 3 digits
+		all_continuous() ~ "{min} ({max})"    # Min and max for sleep variables with 1 digit
+	),
+	digits = list(
+		income ~ c(3, 3),    # 3 digits for income percentiles
+		all_continuous() ~ 1    # 1 digit for sleep min and max
+	),
+	missing_text = "Missing") |>
+	add_p(test = list(all_continuous() ~ "t.test",
+										all_categorical() ~ "chisq.test")) |>
+	add_overall(col_label = "**Total**") |>
+	bold_labels() |>
+	modify_footnote(update = everything() ~ NA) |>
+	modify_header(label = "**Variable**", p.value = "**P**")
+
+
