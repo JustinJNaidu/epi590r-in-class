@@ -21,8 +21,15 @@ nlsy <- read_csv(here::here("data", "raw", "nlsy.csv"),
          race_eth_cat = factor(race_eth, labels = c("Hispanic", "Black", "Non-Black, Non-Hispanic")),
          eyesight_cat = factor(eyesight, labels = c("Excellent", "Very good", "Good", "Fair", "Poor")),
          glasses_cat = factor(glasses, labels = c("No", "Yes"))) 
+```
+
+
+This is the number of people in the data
+```{r}
 nrow(nlsy)
 ```
+
+
 
 # Customization of `tbl_summary()`
 
@@ -51,9 +58,11 @@ tbl_summary(
 ```
 
 
-# Error in this code was that nlsy was originally all capitalized. 
-# R is case sensitive
+We’re using some data from the National Longitudinal Survey of Youth 1979, a cohort of American young adults aged 14-22 at enrollment in 1979. They continue to be followed to this day, and there is a wealth of publicly available data online. I’ve downloaded the answers to a survey question about whether respondents wear glasses, a scale about their eyesight with glasses, their (NLSY-assigned 😒) race/ethnicity, their sex (presumably at birth, but unclear), their family’s income in 1979, and their age at the birth of their first child.
+
 ```{r}
+
+# Error in this code was that nlsy was originally all capitalized as R is case sensitive
 tbl_summary(
   nlsy,
   by = sex_cat,
