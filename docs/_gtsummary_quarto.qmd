@@ -20,6 +20,7 @@ nlsy <- read_csv(here::here("data", "raw", "nlsy.csv"),
          race_eth_cat = factor(race_eth, labels = c("Hispanic", "Black", "Non-Black, Non-Hispanic")),
          eyesight_cat = factor(eyesight, labels = c("Excellent", "Very good", "Good", "Fair", "Poor")),
          glasses_cat = factor(glasses, labels = c("No", "Yes"))) 
+nrow(nlsy)
 ```
 
 # Customization of `tbl_summary()`
@@ -46,4 +47,15 @@ tbl_summary(
     age_bir ~ "Age at first birth"
   ),
   missing_text = "Missing")
+```
+
+
+# Error in this code was that nlsy was originally all capitalized. 
+# R is case sensitive
+```{r}
+tbl_summary(
+  nlsy,
+  by = sex_cat,
+  include = c(sex_cat, race_eth_cat, region_cat,
+              eyesight_cat, glasses, age_bir))
 ```
