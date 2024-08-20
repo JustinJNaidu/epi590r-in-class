@@ -34,6 +34,8 @@ nrow(nlsy)
 # Customization of `tbl_summary()`
 
 ```{r}
+#| label: fig-table1
+#| fig-cap: "Table 1 shows the descriptive statistics"
 tbl_summary(
   nlsy,
   by = sex_cat,
@@ -42,6 +44,8 @@ tbl_summary(
 ```
 
 ```{r}
+#| label: fig-table2
+#| fig-cap: "Table 2 shows the descriptive statistics"
 tbl_summary(
   nlsy,
   by = sex_cat,
@@ -56,9 +60,8 @@ tbl_summary(
   ),
   missing_text = "Missing")
 ```
+@fig-table1 contains a table and @fig-table2 contains a table.
 
-
-We’re using some data from the National Longitudinal Survey of Youth 1979, a cohort of American young adults aged 14-22 at enrollment in 1979. They continue to be followed to this day, and there is a wealth of publicly available data online. I’ve downloaded the answers to a survey question about whether respondents wear glasses, a scale about their eyesight with glasses, their (NLSY-assigned 😒) race/ethnicity, their sex (presumably at birth, but unclear), their family’s income in 1979, and their age at the birth of their first child.
 
 ```{r}
 
@@ -69,3 +72,40 @@ tbl_summary(
   include = c(sex_cat, race_eth_cat, region_cat,
               eyesight_cat, glasses, age_bir))
 ```
+
+We’re using some data from the National Longitudinal Survey of Youth 1979, a cohort of American young adults aged 14-22 at enrollment in 1979. They continue to be followed to this day, and there is a wealth of publicly available data online. I’ve downloaded the answers to a survey question about whether respondents wear glasses, a scale about their eyesight with glasses, their (NLSY-assigned 😒) race/ethnicity, their sex (presumably at birth, but unclear), their family’s income in 1979, and their age at the birth of their first child.
+
+
+```{r}
+mean_sleep_weekend <- mean(nlsy$sleep_wknd, na.rm = TRUE)
+mean_sleep_weekend
+```
+1. There mean number of hours was `r mean_sleep_weekend`
+2. There mean number of hours was `r mean(nlsy$sleep_wknd, na.rm = TRUE)`
+
+```{r}
+median_sleep_weekend <- median(nlsy$sleep_wknd, na.rm = TRUE)
+median_sleep_weekend
+```
+3. The median numbers of hours was `r median_sleep_weekend` participants
+4. The median numbers of hours was `r mean(nlsy$sleep_wknd, na.rm = TRUE)` participants"
+
+
+```{r}
+#| eval: true
+#| label: tbl-descr
+#| tbl-cap: "Descriptive statistics"
+#| output-location: slide
+table1 <- tbl_summary(
+  nlsy,
+  by = sex_cat,
+  include = c(sex_cat, race_eth_cat, region_cat,
+              eyesight_cat, glasses, age_bir, sleep_wknd)) |> 
+  add_overall(last = TRUE)
+
+table1
+
+mean_hrs_sleep <- inline_text(table1, variable = "sleep_wknd", column = "stat_0")
+```
+
+The median and IQR are `r mean_hrs_sleep`
