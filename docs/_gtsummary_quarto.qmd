@@ -4,6 +4,7 @@ format: html
 theme: superhero
 execute:
   echo: false
+  error: true
 ---
 
 ```{r message=FALSE}
